@@ -1,0 +1,2 @@
+drop database if exists wait_for_weight_loss_db;
+create database wait_for_weight_loss_db;
