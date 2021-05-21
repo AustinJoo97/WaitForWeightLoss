@@ -1,6 +1,23 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+// This route will create a new user upon loading, completing, and submitting at the create account page
+router.post('/', async (req, res) => {
+  try {
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.userID = userData.id;
+      req.session.loggedIn = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// This will retrieve and log in a user based on the username entered at the login page
 router.post('/login', async (req, res) => {
     try {
       const userData = await User.findOne({ where: { username: req.body.username } });
@@ -12,9 +29,9 @@ router.post('/login', async (req, res) => {
         return;
       }
   
-      const validPassword = await userData.checkPassword(req.body.password);
+      const validator = await userData.checkPassword(req.body.password);
   
-      if (!validPassword) {
+      if (!validator) {
         res
           .status(400)
           .json({ message: 'Incorrect email or password, please try again' });
@@ -22,8 +39,8 @@ router.post('/login', async (req, res) => {
       }
   
       req.session.save(() => {
-        req.session.user_id = userData.id;
-        req.session.logged_in = true;
+        req.session.userID = userData.id;
+        req.session.loggedIn = true;
         
         res.json({ user: userData, message: 'You are now logged in!' });
       });
@@ -33,8 +50,9 @@ router.post('/login', async (req, res) => {
     }
   });
   
+  // This route will destroy the current session, deleting the session's current userID and loggedIn values
   router.post('/logout', (req, res) => {
-    if (req.session.logged_in) {
+    if (req.session.loggedIn) {
       req.session.destroy(() => {
         res.status(204).end();
       });
