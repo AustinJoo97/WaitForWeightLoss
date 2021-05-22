@@ -15,7 +15,7 @@ const loginFormHandler = async (event) => {
         document.location.replace('/');
       } else {
         alert('Incorrect email or password, please try again');
-        document.location.replace('/login');
+        return;
         // The above line exists in the case that there is a login section somewhere other than the login page itself
             // This would then redirect a user from said login section to the login page if they were to enter mismatched credentials
         // alert(response.statusText);
