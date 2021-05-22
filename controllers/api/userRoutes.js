@@ -7,8 +7,8 @@ router.post('/', async (req, res) => {
     const userData = await User.create(req.body);
 
     req.session.save(() => {
-      req.session.userID = userData.id;
-      req.session.loggedIn = true;
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
 
       res.status(200).json(userData);
     });
@@ -39,8 +39,8 @@ router.post('/login', async (req, res) => {
       }
   
       req.session.save(() => {
-        req.session.userID = userData.id;
-        req.session.loggedIn = true;
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
         
         res.json({ user: userData, message: 'You are now logged in!' });
       });
@@ -50,9 +50,9 @@ router.post('/login', async (req, res) => {
     }
   });
   
-  // This route will destroy the current session, deleting the session's current userID and loggedIn values
+  // This route will destroy the current session, deleting the session's current user_id and logged_in values
   router.post('/logout', (req, res) => {
-    if (req.session.loggedIn) {
+    if (req.session.logged_in) {
       req.session.destroy(() => {
         res.status(204).end();
       });
