@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { User, Weight } = require('../models');
-const isAuthorized = require('../utils/auth');
+const isAuthorized = require('../utils/authorization');
 
 // This will, as long as the user logged in (req.session.logged_in === true), take the user to their dashboard by loading the dashboard handlebar
 router.get('/dashboard', isAuthorized, async (req, res) => {
@@ -27,7 +27,7 @@ router.get('/login', (req, res) => {
       res.redirect('/dashboard');
       return;
     }
-    res.render('login');
+    res.render('signup');
   });
   
   module.exports = router;
