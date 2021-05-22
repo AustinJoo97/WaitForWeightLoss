@@ -4,6 +4,7 @@ const { User } = require('../../models');
 // This route will create a new user upon loading, completing, and submitting at the create account page
 router.post('/', async (req, res) => {
   try {
+    console.log(req.body);
     const userData = await User.create(req.body);
 
     req.session.save(() => {
@@ -17,10 +18,10 @@ router.post('/', async (req, res) => {
   }
 });
 
-// This will retrieve and log in a user based on the username entered at the login page
+// This will retrieve and log in a user based on the email entered at the login page
 router.post('/login', async (req, res) => {
     try {
-      const userData = await User.findOne({ where: { username: req.body.username } });
+      const userData = await User.findOne({ where: { email: req.body.email } });
   
       if (!userData) {
         res
