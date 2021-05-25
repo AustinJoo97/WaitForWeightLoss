@@ -89,4 +89,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+// This route will take the req body (which should only contain the user's weight), add the user's id stored in session, then create a new entry into the weight table
+router.post('/newEntry', async (req, res) => {
+    try{
+        req.body.user_id = req.session.user_id;
+
+        const newWeightEntry = await Weight.create(req.body);
+
+        req.session.save(() => {
+            req.session.user_id = newWeightEntry.user_id;
+            req.session.logged_in = true;
+
+            res.status(200).json(newWeightEntry);
+        })
+    }
+    catch(err){
+        res.status(500).json({message: 'Internal server error'})
+    }
+})
+
 module.exports = router;
