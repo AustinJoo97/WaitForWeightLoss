@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const CanvasJS = require('canvasjs');
+// const CanvasJS = require('canvasjs');
 const {Weight} = require('../../models');
 
 function findHighestLowest(arr){
