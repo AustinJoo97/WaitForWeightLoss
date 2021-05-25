@@ -7,6 +7,10 @@ router.post('/', async (req, res) => {
     console.log(req.body);
     const userData = await User.create(req.body);
 
+    userData = userData.get({plain: true});
+
+    console.log(userData);
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
