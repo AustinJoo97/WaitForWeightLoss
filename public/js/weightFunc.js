@@ -1,3 +1,4 @@
+// Func to get all weight data
 const getAllWeights = async () => {
     const allWeightData = await fetch('api/weight');
 
@@ -8,6 +9,10 @@ const getAllWeights = async () => {
     }
 }
 
+// Get chart for graphed weights over time
+// const getWeightChart = async () => {
+    
+// }
 
 // The below function will be used to add a new weight to the database
 const newWeightEntry = async(event) => {
@@ -16,6 +21,8 @@ const newWeightEntry = async(event) => {
     const weight = document.querySelector('#weightEntry').value.trim();
 
     weight = Number(weight);
+
+    // Check to ensure value is a number to be valid for saving
 
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
@@ -31,4 +38,8 @@ const newWeightEntry = async(event) => {
     } else {
         alert(response.statusText)
     }
+}
+
+const newGoalWeight = async (event) => {
+
 }
