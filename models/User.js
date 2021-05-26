@@ -37,7 +37,8 @@ User.init(
       },
     },
     goal_weight: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
   },
   {

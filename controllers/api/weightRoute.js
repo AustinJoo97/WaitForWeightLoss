@@ -94,7 +94,11 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
     try{
         req.body.user_id = req.session.user_id;
 
+
+        console.log(req.body);
         const newWeightEntry = await Weight.create(req.body);
+
+        console.log(newWeightEntry);
 
         req.session.save(() => {
             req.session.user_id = newWeightEntry.user_id;
