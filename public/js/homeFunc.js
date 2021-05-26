@@ -26,8 +26,6 @@ const newWeightEntry = async(event) => {
 
     const weight = document.querySelector('#currentWeightEntry').value;
 
-    console.log(weight);
-
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
         body: JSON.stringify({ 
@@ -49,21 +47,19 @@ const updateGoalWeight = async (event) => {
 
     const newGoalWeight = document.querySelector('#goalWeightEntry').value;
 
-    console.log(newGoalWeight);
-
     const newWeightEntry = await fetch('api/weight/update', {
         method: 'PUT',
         body: JSON.stringify({ 
-            weight: newGoalWeight
+            goal_weight: newGoalWeight
         }),
         headers: { 'Content-Type': 'application/json' },
     })
 
     if(newWeightEntry.ok){
         alert('Successfully updated goal weight!');
-        return;
+        document.getElementById('userGoalWeight').textContent = newGoalWeight;
     } else {
-        alert(response.statusText);
+        alert(newWeightEntry.statusText);
     }
 }
 

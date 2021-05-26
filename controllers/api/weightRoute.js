@@ -94,15 +94,9 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
     try{
         req.body.user_id = req.session.user_id;
 
-
         const newWeightEntry = await Weight.create(req.body);
-
-        req.session.save(() => {
-            req.session.user_id = newWeightEntry.user_id;
-            req.session.logged_in = true;
-
-            res.status(200).json(newWeightEntry);
-        })
+        
+        res.status(200).json(newWeightEntry);
     }
     catch(err){
         res.status(500).json({message: 'Internal server error'})
@@ -113,22 +107,13 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
 
 router.put('/update', isAuthorized, async (req, res) => {
     try{
-        const updatedWeightEntry = await User.find({
+        const updatedWeightEntry = await User.update(req.body, {
             where: {
                 id: req.session.user_id
             }
-        }).on('success', (user) => {
-            user.update({
-                goal_weight: req.body.weight
-            })
-        })
+        });
 
-        req.session.save(() => {
-            req.session.user_id = updatedWeightEntry.user_id;
-            req.session.logged_in = true;
-
-            res.status(200).json(updatedWeightEntry);
-        })
+        res.status(200).json(updatedWeightEntry);
     } catch(err) {
         res.status(500).json({message: 'Internal server error'})
     }
