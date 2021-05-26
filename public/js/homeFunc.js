@@ -24,7 +24,7 @@ const getInDepthView = async () => {
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
-    const weight = document.querySelector('#currentWeight').value.trim();
+    const weight = document.querySelector('#currentWeightEntry').value;
 
     console.log(weight);
 
@@ -37,8 +37,8 @@ const newWeightEntry = async(event) => {
     })
 
     if(newWeightEntry.ok){
-        alert('Successfully added weight for today!')
-        return;
+        alert('Successfully added weight for today!');
+        document.location.reload();
     } else {
         alert(response.statusText)
     }
@@ -47,12 +47,12 @@ const newWeightEntry = async(event) => {
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#goalWeight').value.trim();
+    const newGoalWeight = document.querySelector('#goalWeightEntry').value;
 
-    newGoalWeight = Number(newGoalWeight);
+    console.log(newGoalWeight);
 
     const newWeightEntry = await fetch('api/weight/update', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({ 
             weight: newGoalWeight
         }),
@@ -67,8 +67,7 @@ const updateGoalWeight = async (event) => {
     }
 }
 
-document.onload(getBasicView);
 // document.getElementById('in_depth_button').addEventListener('onclick', getInDepthView);
 
-document.getElementById('currentWeightForm').addEventListener('submit', newWeightEntry);
-document.getElementById('goalWeightForm').addEventListener('submit', updateGoalWeight);
+document.querySelector('#currentWeightForm').addEventListener('submit', newWeightEntry);
+document.querySelector('#goalWeightForm').addEventListener('submit', updateGoalWeight);
