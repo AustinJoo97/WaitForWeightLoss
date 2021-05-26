@@ -22,12 +22,16 @@ router.get('/', isAuthorized, async (req, res) => {
         // Should return a single element 
         const user = userData.get({plain: true});
         // Should return an array of weights
-        const weights = weightData.get({plain: true})
+        const weights = [];
+        weightData.forEach((weight) => {
+            weights.push(weight.get({plain: true}))
+        })
         // weights[0] will be sent to the handlebar to utilize only the most recently entered weight by the user
+        const weight = weights[0];
 
         res.render('homepage', {
             ...user,
-            ...weights[0],
+            ...weight,
             logged_in: true
         })
     } catch(err){
