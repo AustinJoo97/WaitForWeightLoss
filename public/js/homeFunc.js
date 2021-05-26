@@ -1,5 +1,15 @@
 // All of these functions are meant to be run when the basic homepage is serving as the user's current DOM
 
+const getBasicView = async () => {
+    const basicWeightData = await fetch('/');
+
+    if(basicWeightData.ok){
+        return;
+    } else {
+        alert(response.statusText)
+    }
+}
+
 // Get chart and all weight info for graphed weights over time and in-depth profile; this should be triggered when the user is switching to in-depth mode
 const getInDepthView = async () => {
     const allWeightData = await fetch('api/weight/');
@@ -14,11 +24,9 @@ const getInDepthView = async () => {
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
-    const weight = document.querySelector('#weightEntry').value.trim();
+    const weight = document.querySelector('#currentWeight').value.trim();
 
-    weight = Number(weight);
-
-    // Check to ensure value is a number to be valid for saving
+    console.log(weight);
 
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
@@ -39,7 +47,7 @@ const newWeightEntry = async(event) => {
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#updateWeight').value.trim();
+    const newGoalWeight = document.querySelector('#goalWeight').value.trim();
 
     newGoalWeight = Number(newGoalWeight);
 
@@ -58,3 +66,9 @@ const updateGoalWeight = async (event) => {
         alert(response.statusText);
     }
 }
+
+document.onload(getBasicView);
+// document.getElementById('in_depth_button').addEventListener('onclick', getInDepthView);
+
+document.getElementById('currentWeightForm').addEventListener('submit', newWeightEntry);
+document.getElementById('goalWeightForm').addEventListener('submit', updateGoalWeight);

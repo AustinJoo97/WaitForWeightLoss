@@ -4,18 +4,15 @@ const { User } = require('../../models');
 // This route will create a new user upon loading, completing, and submitting at the create account page
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body);
     const userData = await User.create(req.body);
 
-    userData = userData.get({plain: true});
-
-    console.log(userData);
+    const user = userData.get({plain: true});
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = user.id;
       req.session.logged_in = true;
 
-      res.status(200).json(userData);
+      res.status(200).json(user);
     });
   } catch (err) {
     res.status(400).json(err);
