@@ -1,17 +1,16 @@
-// All of these functions are meant to be run when the in-depth profile is serving as the user's DOM
+// All of these functions are meant to be run when the basic homepage is serving as the user's current DOM
 
-// Get basic homepage look at profile; this should be used when the user is swapping to the basic overview
-const getBasicView = async () => {
-    const basicWeightData = await fetch('/');
+// Get chart and all weight info for graphed weights over time and in-depth profile; this should be triggered when the user is switching to in-depth mode
+const getInDepthView = async () => {
+    const allWeightData = await fetch('api/weight/');
 
-    if(basicWeightData.ok){
+    if(allWeightData.ok){
         return;
     } else {
         alert(response.statusText)
     }
 }
 
-// The below function will be used to add a new weight to the database
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
@@ -37,7 +36,6 @@ const newWeightEntry = async(event) => {
     }
 }
 
-// This function will be user to update the user's goal weight as defined previously in the database
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
@@ -46,7 +44,7 @@ const updateGoalWeight = async (event) => {
     newGoalWeight = Number(newGoalWeight);
 
     const newWeightEntry = await fetch('api/weight/update', {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify({ 
             weight: newGoalWeight
         }),
