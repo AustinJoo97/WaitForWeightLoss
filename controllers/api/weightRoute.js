@@ -3,23 +3,38 @@ const isAuthorized = require('../../utils/authorization');
 // const CanvasJS = require('canvasjs');
 const {Weight, User} = require('../../models');
 
-function findHighestLowest(arr){
+function findHighest(arr){
     let highest;
-    let lowest;
 
     for(let i = 0; i < arr.length; i++){
         if(!highest){
             highest = arr[i].weight;
-            lowest = arr[i].weight;
-        } else if (highest < arr[i].weight){
+        } 
+        if (highest < arr[i].weight){
             highest = arr[i].weight;
-        } else if (lowest > arr[i].weight){
-            lowest = arr[i].weight;
-        }
+        } 
     }
 
-    return [highest, lowest];
+    return highest;
 }
+
+// function findHighestLowest(arr){
+//     let highest;
+//     let lowest;
+
+//     for(let i = 0; i < arr.length; i++){
+//         if(!highest){
+//             highest = arr[i].weight;
+//             lowest = arr[i].weight;
+//         } else if (highest < arr[i].weight){
+//             highest = arr[i].weight;
+//         } else if (lowest > arr[i].weight){
+//             lowest = arr[i].weight;
+//         }
+//     }
+
+//     return [highest, lowest];
+// }
 
 router.get('/', isAuthorized, async (req, res) => {
     try{
@@ -33,58 +48,55 @@ router.get('/', isAuthorized, async (req, res) => {
         const allWeights = allWeightsData.map((weight) => weight.get({plain:true}));
         // Should return an array with all Weight.ValueType data
 
-        let sortedWeights = findHighestLowest(allWeights)
-        // Will sort all the weights once
-        let highestWeight = sortedWeights[0];
-        // Will store the highest weight
-        let lowestWeight = sortedWeights[1];
-        // Will store the lowest weight
+        // let sortedWeights = findHighestLowest(allWeights)
+        // // Will sort all the weights once
+        // let highestWeight = sortedWeights[0];
+        // // Will store the highest weight
+        // let lowestWeight = sortedWeights[1];
+        // // Will store the lowest weight
+
+        const highestWeight = findHighest(allWeights);
 
         const dataPoints = [];
 
         allWeights.map((weight) => {
-            let weightObj;
-            if(weight.weight === highestWeight){
-                weightObj = {label: weight.date_reported, y: weight.weight, indexLabel: "\u2191 highest", markerColor: "red", markerType: "triangle"}
-            } else if(weight.weight === lowestWeight){
-                weightObj = {label: weight.date_reported, y: weight.weight, indexLabel: "\u2193 lowest", markerColor: "blue", markerType: "triangle"};
-            } else {
-                weightObj = {label: weight.date_reported, y: weight.weight}
-            }
-            dataPoints.push(weightObj)
+            let weightPoint = [weight.date_reported, weight.weight];
+
+            dataPoints.push(weightPoint)
         })
 
-        const weightChart = CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            theme: "light2",
-            title:{
-                text: "Weight Journey"
-            },
-            axisY:{
-                title: "Weight Reported in Lbs",
-                includeZero: false
-            },
-            axisX: {
-                title: "Date Reported"
-            },
-            data: [{        
-                type: "line",
-                    indexLabelFontSize: 16,
-                dataPoints: dataPoints
-            }]
-        })
+        // const weightChart = CanvasJS.Chart("chartContainer", {
+        //     animationEnabled: true,
+        //     theme: "light2",
+        //     title:{
+        //         text: "Weight Journey"
+        //     },
+        //     axisY:{
+        //         title: "Weight Reported in Lbs",
+        //         includeZero: false
+        //     },
+        //     axisX: {
+        //         title: "Date Reported"
+        //     },
+        //     data: [{        
+        //         type: "line",
+        //             indexLabelFontSize: 16,
+        //         dataPoints: dataPoints
+        //     }]
+        // })
         // This will return all the weights array (with highest and lowest weights marked) as data to be rendered as a chart
         // This should be utilized via weightChart.render() at the front end
     
         res.render('dashboard', {
             ...allWeights,
-            weightChart,
-            sortedWeights,
+            ...dataPoints,
+            highestWeight: highestWeight,
+            mostRecentlyReported: allWeights[0].date_reported,
             logged_in: req.session.logged_in,
             user_id: req.session.user_id
         })
     } catch (err){
-        res.status(500).json({message: 'Internal server error'})
+        res.status(500).json({message: 'Internal server error'});
     }
 });
 

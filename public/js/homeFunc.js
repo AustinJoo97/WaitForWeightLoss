@@ -57,6 +57,7 @@ const updateGoalWeight = async (event) => {
 
     if(newWeightEntry.ok){
         alert('Successfully updated goal weight!');
+        document.querySelector('#goalWeightEntry').value = '';
         document.getElementById('userGoalWeight').textContent = newGoalWeight;
     } else {
         alert(newWeightEntry.statusText);
