@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
-const CanvasJS = require('canvasjs');
+//const CanvasJS = require('canvasjs');
 const {Weight, User} = require('../../models');
 
 function findHighestLowest(arr){
@@ -54,25 +54,25 @@ router.get('/', isAuthorized, async (req, res) => {
             dataPoints.push(weightObj)
         })
 
-        const weightChart = CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            theme: "light2",
-            title:{
-                text: "Weight Journey"
-            },
-            axisY:{
-                title: "Weight Reported in Lbs",
-                includeZero: false
-            },
-            axisX: {
-                title: "Date Reported"
-            },
-            data: [{        
-                type: "line",
-                    indexLabelFontSize: 16,
-                dataPoints: dataPoints
-            }]
-        })
+ //       const weightChart = CanvasJS.Chart("chartContainer", {
+        //     animationEnabled: true,
+        //     theme: "light2",
+        //     title:{
+        //         text: "Weight Journey"
+        //     },
+        //     axisY:{
+        //         title: "Weight Reported in Lbs",
+        //         includeZero: false
+        //     },
+        //     axisX: {
+        //         title: "Date Reported"
+        //     },
+        //     data: [{        
+        //         type: "line",
+        //             indexLabelFontSize: 16,
+        //         dataPoints: dataPoints
+        //     }]
+        // })
         // This will return all the weights array (with highest and lowest weights marked) as data to be rendered as a chart
         // This should be utilized via weightChart.render() at the front end
     
@@ -110,7 +110,7 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
 
 
 
-router.put('/update', isAuthorized, (req, res) => {
+router.put('/update', isAuthorized, async (req, res) => {
     try{
         const updatedWeightEntry = await User.find({
             where: {
@@ -184,25 +184,25 @@ router.get('/', isAuthorized, async (req, res) => {
             dataPoints.push(weightObj)
         })
 
-        const weightChart = CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            theme: "light2",
-            title:{
-                text: "Weight Journey"
-            },
-            axisY:{
-                title: "Weight Reported in Lbs",
-                includeZero: false
-            },
-            axisX: {
-                title: "Date Reported"
-            },
-            data: [{        
-                type: "line",
-                    indexLabelFontSize: 16,
-                dataPoints: dataPoints
-            }]
-        })
+        // const weightChart = CanvasJS.Chart("chartContainer", {
+        //     animationEnabled: true,
+        //     theme: "light2",
+        //     title:{
+        //         text: "Weight Journey"
+        //     },
+        //     axisY:{
+        //         title: "Weight Reported in Lbs",
+        //         includeZero: false
+        //     },
+        //     axisX: {
+        //         title: "Date Reported"
+        //     },
+        //     data: [{        
+        //         type: "line",
+        //             indexLabelFontSize: 16,
+        //         dataPoints: dataPoints
+        //     }]
+        // })
         // This will return all the weights array (with highest and lowest weights marked) as data to be rendered as a chart
         // This should be utilized via weightChart.render() at the front end
     
@@ -240,7 +240,7 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
 
 
 
-router.put('/update', isAuthorized, (req, res) => {
+router.put('/update', isAuthorized, async (req, res) => {
     try{
         const updatedWeightEntry = await User.find({
             where: {
