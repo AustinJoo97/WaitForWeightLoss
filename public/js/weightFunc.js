@@ -15,11 +15,7 @@ const getBasicView = async () => {
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
-    const weight = document.querySelector('#weightEntry').value.trim();
-
-    weight = Number(weight);
-
-    // Check to ensure value is a number to be valid for saving
+    const weight = document.querySelector('#currentWeight').value;
 
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
@@ -41,9 +37,7 @@ const newWeightEntry = async(event) => {
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#updateWeight').value.trim();
-
-    newGoalWeight = Number(newGoalWeight);
+    const newGoalWeight = document.querySelector('#goalWeight').value.trim();
 
     const newWeightEntry = await fetch('api/weight/update', {
         method: 'PUT',
