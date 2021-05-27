@@ -33,26 +33,23 @@ const newWeightEntry = async(event) => {
     }
 }
 
-// This function will be user to update the user's goal weight as defined previously in the database
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#updateWeight').value.trim();
-
-    console.log(newGoalWeight);
+    const newGoalWeight = document.querySelector('#goalWeightEntry').value;
 
     const newWeightEntry = await fetch('api/weight/update', {
         method: 'PUT',
         body: JSON.stringify({ 
-            weight: newGoalWeight
+            goal_weight: newGoalWeight
         }),
         headers: { 'Content-Type': 'application/json' },
     })
 
     if(newWeightEntry.ok){
         alert('Successfully updated goal weight!');
-        return;
+        document.getElementById('userGoalWeight').textContent = newGoalWeight;
     } else {
-        alert(response.statusText);
+        alert(newWeightEntry.statusText);
     }
 }

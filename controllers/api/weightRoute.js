@@ -95,7 +95,6 @@ router.post('/newEntry', isAuthorized, async (req, res) => {
         req.body.user_id = req.session.user_id;
 
         const newWeightEntry = await Weight.create(req.body);
-        
         res.status(200).json(newWeightEntry);
     }
     catch(err){
@@ -112,12 +111,12 @@ router.put('/update', isAuthorized, async (req, res) => {
                 id: req.session.user_id
             }
         });
-
         res.status(200).json(updatedWeightEntry);
     } catch(err) {
         res.status(500).json({message: 'Internal server error'})
     }
 })
+
 
 
 module.exports = router;
