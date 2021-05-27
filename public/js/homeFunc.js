@@ -24,7 +24,7 @@ const getInDepthView = async () => {
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
-    const weight = document.querySelector('#currentWeight').value;
+    const weight = document.querySelector('#currentWeightEntry').value;
 
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
@@ -35,7 +35,7 @@ const newWeightEntry = async(event) => {
     })
 
     if(newWeightEntry.ok){
-        alert('Successfully added weight for today!')
+        alert('Successfully added weight for today!');
         document.location.reload();
     } else {
         alert(response.statusText)
@@ -45,25 +45,25 @@ const newWeightEntry = async(event) => {
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#goalWeight').value.trim();
+    const newGoalWeight = document.querySelector('#goalWeightEntry').value;
 
     const newWeightEntry = await fetch('api/weight/update', {
         method: 'PUT',
         body: JSON.stringify({ 
-            weight: newGoalWeight
+            goal_weight: newGoalWeight
         }),
         headers: { 'Content-Type': 'application/json' },
     })
 
     if(newWeightEntry.ok){
         alert('Successfully updated goal weight!');
-        document.querySelector('#currentGoalWeight').textContent = newGoalWeight;
+        document.getElementById('userGoalWeight').textContent = newGoalWeight;
     } else {
-        alert(response.statusText);
+        alert(newWeightEntry.statusText);
     }
 }
 
 // document.getElementById('in_depth_button').addEventListener('onclick', getInDepthView);
 
-document.getElementById('currentWeightForm').addEventListener('submit', newWeightEntry);
-document.getElementById('goalWeightForm').addEventListener('submit', updateGoalWeight);
+document.querySelector('#currentWeightForm').addEventListener('submit', newWeightEntry);
+document.querySelector('#goalWeightForm').addEventListener('submit', updateGoalWeight);
