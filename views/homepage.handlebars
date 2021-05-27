@@ -2,13 +2,13 @@
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         />
-        <title>Overview</title>
+      <title>Overview</title>
     </head>
     <body>
         <div class="jumbotron">
-            <h1 class="display-4">Hello, Welcome Back!</h1>
-            <button type="button" class="btn btn-success">In Depth Results</button>
-            <button type="button" class="btn btn-success">Sign Out</button>
+            <h1 class="display-4">Hello, Welcome Back {{user.username}}!</h1>
+            <button type="button" class="btn btn-success" id="in_depth_button">In Depth Results</button>
+            <button type="button" class="btn btn-success" id="logout">Sign Out</button>
         </div>
         
         <body class="bg-default">
@@ -20,11 +20,11 @@
                           <div class="row">
                             <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0">Current Weight</h5>
-                              <span class="h2 font-weight-bold mb-0">000</span>
+                              <span class="h2 font-weight-bold mb-0">{{weight.weight}}</span>
                             </div>
                           </div>
                           <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-nowrap">Last Reported</span>
+                            <span class="text-nowrap">Last Reported: {{formatDate weight.date_reported}}</span>
                           </p>
                         </div>
                     </div>
@@ -34,8 +34,8 @@
                         <div class="card-body">
                           <div class="row">
                             <div class="col">
-                              <h5 class="card-title text-uppercase text-muted mb-0">Highest Weight</h5>
-                              <span class="h2 font-weight-bold mb-0">000</span>
+                              <h5 class="card-title text-uppercase text-muted mb-0">Highest Weight of</h5>
+                              <span class="h2 font-weight-bold mb-0">{{highest}}</span>
                             </div>
                             <div class="col-auto">
                               <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -43,7 +43,7 @@
                             </div>
                           </div>
                           <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-nowrap">Since last month</span>
+                            <span class="text-nowrap"></span>
                           </p>
                         </div>
                       </div>
@@ -54,7 +54,7 @@
                           <div class="row">
                             <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0">Goal Weight</h5>
-                              <span class="h2 font-weight-bold mb-0">000</span>
+                              <span class="h2 font-weight-bold mb-0" id="userGoalWeight">{{user.goal_weight}}</span>
                             </div>
                             <div class="col-auto">
                               <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -93,30 +93,20 @@
                   
                 </div>
                 <br>
-                <br>
-                <div>
+                <form id='currentWeightForm'>
                     <h5> Current Weight</h5>
-                    <input type="text" placeholder="Month" id="month"> 
-                    <input type="number" placeholder="Current Weight" id="currentWeight">
-                    <button class="button is-info is-light" onclick="addWeight()" id="addMonth">Add</button>
-                </div>
+                    <input type="number" placeholder="Current Weight" id="currentWeightEntry">
+                    <button class="button is-info is-light" id="currentWeightAdd">Add</button>
+                </form>
                 <br>
                 <br>
-                <div>
-                    <h5>Highest Weight</h5>
-                    <input type="text" placeholder="Month" id="month"> 
-                    <input type="number" placeholder="Hightest Weight" id="highWeight">
-                    <button class="button is-info is-light" onclick="addHighest()" id="addMonth">Add</button>
-                </div>
-                <br>
-                <br>
-                <div>
-                    <h5>Add Goal Weight</h5>
-                    <input type="text" placeholder="Month" id="month"> 
-                    <input type="number" placeholder="Goal Weight" id="goalWeight">
-                    <button class="button is-info is-light" onclick="addGoal()" id="addMonth">Add</button>
-                </div>
+                <form id='goalWeightForm'>
+                    <h5>Add/Update Goal Weight</h5>
+                    <input type="number" placeholder="Goal Weight" id="goalWeightEntry">
+                    <button class="button is-info is-light" id="addUpdateGoal">Add</button>
+                </form>
             </div>
     
     </body>
+    <script src='/js/homeFunc.js'></script>
 </html>
