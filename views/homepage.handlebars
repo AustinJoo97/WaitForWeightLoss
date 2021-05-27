@@ -2,7 +2,7 @@
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         />
-        <title>Overview</title>
+      <title>Overview</title>
     </head>
     <body>
         <div class="jumbotron">
@@ -54,7 +54,7 @@
                           <div class="row">
                             <div class="col">
                               <h5 class="card-title text-uppercase text-muted mb-0">Goal Weight</h5>
-                              <span class="h2 font-weight-bold mb-0">{{user.goal_weight}}</span>
+                              <span class="h2 font-weight-bold mb-0" id="userGoalWeight">{{user.goal_weight}}</span>
                             </div>
                             <div class="col-auto">
                               <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -93,20 +93,17 @@
                   
                 </div>
                 <br>
-                <br>
                 <form id='currentWeightForm'>
                     <h5> Current Weight</h5>
-                    <input type="number" placeholder="Current Weight" id="currentWeight">
-                    <button class="button is-info is-light" onclick="addWeight()" id="currentWeightAdd">Add</button>
+                    <input type="number" placeholder="Current Weight" id="currentWeightEntry">
+                    <button class="button is-info is-light" id="currentWeightAdd">Add</button>
                 </form>
-                <br>
-                <br>
                 <br>
                 <br>
                 <form id='goalWeightForm'>
                     <h5>Add/Update Goal Weight</h5>
-                    <input type="number" placeholder="Goal Weight" id="goalWeight">
-                    <button class="button is-info is-light" onclick="addGoal()" id="addUpdateGoal">Add</button>
+                    <input type="number" placeholder="Goal Weight" id="goalWeightEntry">
+                    <button class="button is-info is-light" id="addUpdateGoal">Add</button>
                 </form>
             </div>
     
