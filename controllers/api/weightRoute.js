@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const isAuthorized = require('../../utils/authorization');
-// const CanvasJS = require('canvasjs');
 const {Weight, User} = require('../../models');
 
 function findHighest(arr){
@@ -88,9 +87,9 @@ router.get('/', isAuthorized, async (req, res) => {
         // This should be utilized via weightChart.render() at the front end
     
         res.render('dashboard', {
-            ...allWeights,
-            ...dataPoints,
-            highestWeight: highestWeight,
+            allWeights,
+            dataPoints,
+            highestWeight,
             mostRecentlyReported: allWeights[0].date_reported,
             logged_in: req.session.logged_in,
             user_id: req.session.user_id
