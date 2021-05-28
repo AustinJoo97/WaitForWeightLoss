@@ -37,6 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
+app.get("/*", (req, res) => {
+  const message = "ERROR 404. This page doesn't exist!"
+  
+  res.render("four-oh-four", {message})
+})
+
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Now listening at ${PORT}`));
 });
