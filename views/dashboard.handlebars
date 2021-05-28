@@ -1,42 +1,52 @@
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['line']});
+        google.charts.setOnLoadCallback(drawChart);
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['line']});
-    google.charts.setOnLoadCallback(drawChart);
+        function drawChart(){
+            let data = new google.visualization.DataTable();
 
-    const drawChart = () => {
-        let data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Weight');
 
-        data.addColumn('string', 'Date');
-        data.addColumn('number', 'Weight');
+            //const dataPoints = await fetch('/api/weight/dataPoints');
+            //data.addRows(dataPoints);
 
-        data.addRows()
+            dummyData = [['5/17', 6], ['5/20', 9], ['5/21', 2]]
 
-        const options = {
-            chart: {
-                title: 'Weight Loss Over Time'
-            },
-            width: 900,
-            height: 500
-        };
+            data.addRows(dummyData)
 
+            const options = {
+                chart: {
+                    title: 'Weight Loss Over Time'
+                },
+                width: 900,
+                height: 500
+            };
 
-        const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
+            const chart = new google.charts.Line(document.getElementById('lineChart'));
 
-        chart.draw(data, options);
-    }
-</script>
+            chart.draw(data, google.charts.Line.convertOptions(options));
+        }
+    </script>
+</head>
 
 <body>
     <a href='/'>
         <button type="button" class="btn btn-success" id="overviewButton">Overview</button>
     </a>
-    {{!-- {{#each allWeights as |weight|}}
-        <div>{{weight}}</div>
-    {{/each}} --}}
-    <div>AllWeights: {{allWeights}}</div>
-    <div>DataPoints: {{dataPoints}}</div>
+    <button type="button" class="btn btn-success" id="logout">Sign Out</button>
+    {{#each allWeights as |weight|}}
+        <div>
+            <p><strong>Weight: </strong>{{weight.weight}}</p> 
+            <p><strong>Submitted by:</strong> {{weight.user.username}} on {{formatDate weight.date_reported}}</p>
+            <br>
+        </div>
+    {{/each}}
+    <br>
     <div>Highest Weight: {{highestWeight}}</div>
     <div>Most Recently Reported: {{mostRecentlyReported}}</div>
     <div id="lineChart" style="width: 900px; height: 500px"></div>
 </body>
+<script src='/js/logout.js'></script>
