@@ -10,12 +10,20 @@
             data.addColumn('string', 'Date');
             data.addColumn('number', 'Weight');
 
-            //const dataPoints = await fetch('/api/weight/dataPoints');
-            //data.addRows(dataPoints);
+            let dataPoints;
+            const dataRetriever = async () => {
+                const result = await fetch('/api/weight/dataPoints');
+                dataPoints = await result.json()
+                console.log(dataPoints)
+                
+                data.addRows(dataPoints);
+            };
+
+            dataRetriever();
 
             dummyData = [['5/17', 6], ['5/20', 9], ['5/21', 2]]
 
-            data.addRows(dummyData)
+            //data.addRows(dummyData);
 
             const options = {
                 chart: {
