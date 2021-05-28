@@ -1,5 +1,15 @@
 // All of these functions are meant to be run when the basic homepage is serving as the user's current DOM
 
+const getBasicView = async () => {
+    const basicWeightData = await fetch('/');
+
+    if(basicWeightData.ok){
+        return;
+    } else {
+        alert(response.statusText)
+    }
+}
+
 // Get chart and all weight info for graphed weights over time and in-depth profile; this should be triggered when the user is switching to in-depth mode
 const getInDepthView = async () => {
     const allWeightData = await fetch('api/weight/');
@@ -14,11 +24,7 @@ const getInDepthView = async () => {
 const newWeightEntry = async(event) => {
     event.preventDefault();
 
-    const weight = document.querySelector('#weightEntry').value.trim();
-
-    weight = Number(weight);
-
-    // Check to ensure value is a number to be valid for saving
+    const weight = document.querySelector('#currentWeightEntry').value;
 
     const newWeightEntry = await fetch('api/weight/newEntry', {
         method: 'POST',
@@ -29,8 +35,8 @@ const newWeightEntry = async(event) => {
     })
 
     if(newWeightEntry.ok){
-        alert('Successfully added weight for today!')
-        return;
+        alert('Successfully added weight for today!');
+        document.location.reload();
     } else {
         alert(response.statusText)
     }
@@ -39,22 +45,26 @@ const newWeightEntry = async(event) => {
 const updateGoalWeight = async (event) => {
     event.preventDefault();
 
-    const newGoalWeight = document.querySelector('#updateWeight').value.trim();
-
-    newGoalWeight = Number(newGoalWeight);
+    const newGoalWeight = document.querySelector('#goalWeightEntry').value;
 
     const newWeightEntry = await fetch('api/weight/update', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({ 
-            weight: newGoalWeight
+            goal_weight: newGoalWeight
         }),
         headers: { 'Content-Type': 'application/json' },
     })
 
     if(newWeightEntry.ok){
         alert('Successfully updated goal weight!');
-        return;
+        document.querySelector('#goalWeightEntry').value = '';
+        document.getElementById('userGoalWeight').textContent = newGoalWeight;
     } else {
-        alert(response.statusText);
+        alert(newWeightEntry.statusText);
     }
 }
+
+// document.getElementById('in_depth_button').addEventListener('onclick', getInDepthView);
+
+document.querySelector('#currentWeightForm').addEventListener('submit', newWeightEntry);
+document.querySelector('#goalWeightForm').addEventListener('submit', updateGoalWeight);
