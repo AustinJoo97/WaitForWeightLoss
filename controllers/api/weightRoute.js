@@ -77,26 +77,31 @@ router.put('/update', isAuthorized, async (req, res) => {
 })
 
 router.get('/dataPoints', async (req, res) => {
-    const allWeightsData = await Weight.findAll({
-        where: {
-            user_id: req.session.user_id
-        },
-        order: [['date_reported', 'ASC']]
-    })
+    try{
+        const allWeightsData = await Weight.findAll({
+            where: {
+                user_id: req.session.user_id
+            },
+            order: [['date_reported', 'ASC']]
+        })
+    
+        const allWeights = allWeightsData.map((weight) => weight.get({plain:true}));
+        // Should return an array with all Weight.ValueType data
+    
+    
+        const dataPoints = [];
+    
+        allWeights.map((weight) => {
+            let weightPoint = [weight.date_reported, weight.weight];
+    
+            dataPoints.push(weightPoint)
+        })
+        
+        res.status(200).send(dataPoints);
+    } catch(err) {
+        res.status(500).json({message: 'Internal server error'});
+    }
 
-    const allWeights = allWeightsData.map((weight) => weight.get({plain:true}));
-    // Should return an array with all Weight.ValueType data
-
-
-    const dataPoints = [];
-
-    allWeights.map((weight) => {
-        let weightPoint = [weight.date_reported, weight.weight];
-
-        dataPoints.push(weightPoint)
-    })
-
-    res.send(dataPoints);
 })
 
 
