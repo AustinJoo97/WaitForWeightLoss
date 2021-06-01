@@ -1,5 +1,12 @@
 {
     "cSpell.ignoreWords": [
-        "signup"
+        "canvasjs",
+        "exphbs",
+        "jawsdb",
+        "loggedin",
+        "resave",
+        "signup",
+        "url",
+        "waitforweightloss"
     ]
 }
