@@ -38,6 +38,7 @@
         <button type="button" class="btn btn-success" id="overviewButton">Overview</button>
     </a>
     <button type="button" class="btn btn-success" id="logout">Sign Out</button>
+    <div id="lineChart" style="width: 900px; height: 500px"></div>
     {{#each allWeights as |weight|}}
     <div>
         <p><strong>Weight: </strong>{{weight.weight}}</p>
@@ -48,6 +49,5 @@
     <br>
     <div>Highest Weight: {{highestWeight}}</div>
     <div>Most Recently Reported: {{mostRecentlyReported}}</div>
-    <div id="lineChart" style="width: 900px; height: 500px"></div>
 </body>
 <script src='/js/logout.js'></script>
