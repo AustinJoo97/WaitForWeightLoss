@@ -1,7 +1,12 @@
+.container{
+    display:flex;
+    flex-direction: column;
+}
 html {
     background-image: url(loss.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
  
-    
   }
 h1 {
     text-align: center;
@@ -9,6 +14,4 @@ h1 {
 
 body {
     background-color: rgb(243, 243, 243);
-    height: 100%;
-    
 }
