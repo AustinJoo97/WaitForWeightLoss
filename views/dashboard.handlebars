@@ -4,18 +4,14 @@
     <script type="text/javascript">
         google.charts.load('current', { 'packages': ['line'] });
         google.charts.setOnLoadCallback(drawChart);
-
         function drawChart() {
             let data = new google.visualization.DataTable();
-
             data.addColumn('string', 'Date');
             data.addColumn('number', 'Weight');
-
             fetch('/api/weight/dataPoints')
                 .then((res) => res.json())
                 .then((dataPoints) => {
                     data.addRows(dataPoints);
-
                     const options = {
                         chart: {
                             title: 'Weight Loss Over Time'
@@ -23,13 +19,10 @@
                         width: 900,
                         height: 500
                     };
-
                     const chart = new google.charts.Line(document.getElementById('lineChart'));
-
                     chart.draw(data, google.charts.Line.convertOptions(options));
                 })
                 .catch(err => console.error(err.message))
-
         }
     </script>
 </head>

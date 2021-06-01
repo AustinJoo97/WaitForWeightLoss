@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const isAuthorized = require("../../utils/authorization");
+const { formatDate } = require("../../utils/helpers");
 const { Weight, User } = require("../../models");
 
 function findHighest(arr) {
@@ -91,7 +92,7 @@ router.get("/dataPoints", async (req, res) => {
     const dataPoints = [];
 
     allWeights.map((weight) => {
-      let weightPoint = [weight.date_reported, weight.weight];
+      let weightPoint = [formatDate(weight.date_reported), weight.weight];
 
       dataPoints.push(weightPoint);
     });
